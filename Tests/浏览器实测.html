@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>Chrome 滚轮缩放验收</title>
+<style>
+body{font:20px/1.7 system-ui;max-width:960px;margin:50px auto;background:#f3f6fb;color:#203044}
+header{position:sticky;top:0;background:#fff;padding:20px;border-radius:12px;border:1px solid #ced9e8}
+article{padding:30px 10px} p{max-width:800px} .ruler{width:400px;height:40px;background:#2f6ce5;color:white;text-align:center}
+</style>
+<header><strong>Chrome Ctrl＋滚轮实测</strong><br>
+<output id="metrics"></output><br><output id="events">页面收到的滚轮事件：0</output></header>
+<article><h1>原生页面缩放</h1>
+<p>先按 ⌘0，再按住 Control 滚动。原生比例应变化，页面不应同时上下滚动。松开 Control 后应正常滚动。</p>
+<p>Chrome 菜单中的缩放百分比是验收依据。下面的像素比只作为辅助观察。</p>
+<div class="ruler">400 CSS 像素标尺</div>
+<p>普通正文：中文、English、数字 0123456789。页面缩放会重新排版文字和布局。</p>
+<p style="height:1300px">向下滚动检查区域。</p>
+<p>页面底部</p></article>
+<script>
+let count=0;
+function update(){document.getElementById('metrics').textContent=`设备像素比：${devicePixelRatio.toFixed(2)} · 滚动位置：${Math.round(scrollY)}`}
+addEventListener('wheel',e=>{count++;document.getElementById('events').textContent=`页面收到的滚轮事件：${count} · Ctrl：${e.ctrlKey}`},{passive:true});
+addEventListener('resize',update);addEventListener('scroll',update);update();
+</script></html>
